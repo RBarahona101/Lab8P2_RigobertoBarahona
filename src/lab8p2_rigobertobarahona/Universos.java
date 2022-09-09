@@ -29,6 +29,11 @@ public class Universos {
         this.name = name;
         this.habitantes = habitantes;
     }
+
+    @Override
+    public String toString() {
+        return "Universos{" + "name=" + name + ", habitantes=" + habitantes + '}';
+    }
     
     
     

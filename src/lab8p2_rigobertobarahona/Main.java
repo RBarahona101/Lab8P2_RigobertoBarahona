@@ -1,11 +1,32 @@
 package lab8p2_rigobertobarahona;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 public class Main extends javax.swing.JFrame {
-
+        ArrayList<Universos> universos = new ArrayList();
+        ArrayList<Humano> humanos = new ArrayList();
+        ArrayList<Amanto> amantos = new ArrayList();
+        ArrayList<Seres> temp = new ArrayList();
+        int cont = 0;
 
     public Main() {
         initComponents();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -22,6 +43,8 @@ public class Main extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -36,6 +59,7 @@ public class Main extends javax.swing.JFrame {
         Universos_Box = new javax.swing.JComboBox<>();
         jSpinner1 = new javax.swing.JSpinner();
         Seres_Agregar = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -120,15 +144,31 @@ public class Main extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel8.setText("Nombre");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel9.setText("Habitantes");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 916, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(197, 197, 197)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(454, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -146,7 +186,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Modificar", jPanel5);
+        jTabbedPane1.addTab("Universos Modificar", jPanel5);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -169,8 +209,6 @@ public class Main extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel6.setText("Universo");
-
-        Universos_Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
@@ -233,10 +271,23 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(Seres_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(Universos_Box, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Seres", jPanel2);
+        jTabbedPane1.addTab("Seres Crear", jPanel2);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 926, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 432, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("tab4", jPanel7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -249,16 +300,21 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
+        DefaultComboBoxModel listaU = (DefaultComboBoxModel) Universos_Box.getModel();
+        String name = UniversoC_Nombre.getText();
+        universos.add(new Universos(name, temp) );
+        listaU.addElement(universos.get(cont));
+        cont++;
+        JOptionPane.showMessageDialog(this, "Universado Creado");
+        UniversoC_Nombre.setText("");
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
@@ -312,12 +368,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPane1;
