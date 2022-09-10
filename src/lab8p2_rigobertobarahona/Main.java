@@ -18,9 +18,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 public class Main extends javax.swing.JFrame {
-        ArrayList<Universos> universos = new ArrayList();
-        ArrayList<Humano> humanos = new ArrayList();
-        ArrayList<Amanto> amantos = new ArrayList();
+        adminUniversos au = new adminUniversos();
+        adminSeres as = new adminSeres();
+        
         ArrayList<Seres> temp = new ArrayList();
         int cont = 0;
 
@@ -57,7 +57,7 @@ public class Main extends javax.swing.JFrame {
         Seres_Raza = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         Universos_Box = new javax.swing.JComboBox<>();
-        jSpinner1 = new javax.swing.JSpinner();
+        Seres_Poder = new javax.swing.JSpinner();
         Seres_Agregar = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
 
@@ -157,9 +157,9 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(197, 197, 197)
+                .addGap(99, 99, 99)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(454, Short.MAX_VALUE))
+                .addContainerGap(552, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +186,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Universos Modificar", jPanel5);
+        jTabbedPane1.addTab("Universos Modificar Habitantes", jPanel5);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -205,14 +205,22 @@ public class Main extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setText("Raza");
 
-        Seres_Raza.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Seres_Raza.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Humano", "Amanto" }));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel6.setText("Universo");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+        Universos_Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+
+        Seres_Poder.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
         Seres_Agregar.setText("Agregar");
+        Seres_Agregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Seres_Agregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Seres_AgregarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -236,15 +244,15 @@ public class Main extends javax.swing.JFrame {
                         .addGap(61, 61, 61)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSpinner1))
+                            .addComponent(Seres_Poder))
                         .addGap(106, 106, 106)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(Seres_Anos, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(63, 63, 63)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-                            .addComponent(Seres_Raza, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Seres_Raza, 0, 79, Short.MAX_VALUE)))
                     .addComponent(Seres_Agregar))
                 .addContainerGap(160, Short.MAX_VALUE))
         );
@@ -264,7 +272,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(Seres_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Seres_Anos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Seres_Raza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Seres_Poder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -310,12 +318,35 @@ public class Main extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         DefaultComboBoxModel listaU = (DefaultComboBoxModel) Universos_Box.getModel();
         String name = UniversoC_Nombre.getText();
-        universos.add(new Universos(name, temp) );
-        listaU.addElement(universos.get(cont));
+        au.universos.add(new Universos(name, temp) );
+        listaU.addElement(au.universos.get(cont));
         cont++;
         JOptionPane.showMessageDialog(this, "Universado Creado");
         UniversoC_Nombre.setText("");
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void Seres_AgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Seres_AgregarMouseClicked
+        DefaultComboBoxModel listaU = (DefaultComboBoxModel) Universos_Box.getModel();
+        DefaultComboBoxModel Razas = (DefaultComboBoxModel) Seres_Raza.getModel();
+        if (au.universos.isEmpty() ){
+            JOptionPane.showMessageDialog(this, "No existe el universo estimado");
+        }else{
+            String nombre = Seres_Nombre.getText();
+            int ID = Integer.parseInt(Seres_ID.getText() );
+            int Poder = (int) Seres_Poder.getValue() ;
+            int edad = Integer.parseInt(Seres_Anos.getText() );
+            String universe = au.universos.get(Universos_Box.getSelectedIndex() ).getName() ;
+            if (Universos_Box.getSelectedIndex() == 0){
+                as.seres.add(new Humano(nombre,ID,Poder,edad,universe) );
+                JOptionPane.showMessageDialog(this, "Humano Agregado exitosamente");
+                au.universos.get(Universos_Box.getSelectedIndex() ).getHabitantes().add(new Humano (nombre, ID, Poder, edad, universe) );
+            }else{
+                as.seres.add(new Amanto(nombre, ID, Poder, edad, universe) );
+                JOptionPane.showMessageDialog(this, "Amanto Agregado exitosamente");
+                au.universos.get(Universos_Box.getSelectedIndex() ).getHabitantes().add(new Amanto (nombre, ID, Poder, edad, universe) );
+            }
+        }
+    }//GEN-LAST:event_Seres_AgregarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -357,6 +388,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField Seres_Anos;
     private javax.swing.JFormattedTextField Seres_ID;
     private javax.swing.JFormattedTextField Seres_Nombre;
+    private javax.swing.JSpinner Seres_Poder;
     private javax.swing.JComboBox<String> Seres_Raza;
     private javax.swing.JFormattedTextField UniversoC_Nombre;
     private javax.swing.JComboBox<String> Universos_Box;
@@ -378,7 +410,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

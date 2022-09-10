@@ -1,8 +1,9 @@
 package lab8p2_rigobertobarahona;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Seres {
+public class Seres implements Serializable{
     String nombre;
     int ID;
     int Poder;
