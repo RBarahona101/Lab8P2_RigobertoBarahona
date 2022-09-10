@@ -48,7 +48,7 @@ public class adminSeres {
                         seres.add(temp);
                     }
                 } catch (EOFException e) {
-                    //encontro el final del archivo
+                    
                 }
                 objeto.close();
                 entrada.close();
@@ -58,13 +58,13 @@ public class adminSeres {
         }
     }
 
-    public void escribirArchivoU() {
+    public void escribirArchivoS() {
         FileOutputStream fw = null;
         ObjectOutputStream bw = null;
         try {
-            fw = new FileOutputStream(archivo);
+            fw = new FileOutputStream(archivoS);
             bw = new ObjectOutputStream(fw);
-            for (Universos i : universos) {
+            for (Seres i : seres) {
                 bw.writeObject(i);
             }
             bw.flush();

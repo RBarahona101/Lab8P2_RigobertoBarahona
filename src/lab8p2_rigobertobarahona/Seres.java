@@ -60,7 +60,7 @@ public class Seres implements Serializable{
 
     @Override
     public String toString() {
-        return "Seres{" + "nombre=" + nombre + ", ID=" + ID + ", Poder=" + Poder + ", edad=" + edad + ", universe=" + universe + '}';
+        return nombre;
     }
     
 }
