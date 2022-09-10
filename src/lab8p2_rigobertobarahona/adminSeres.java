@@ -1,9 +1,12 @@
 package lab8p2_rigobertobarahona;
-import java.io.*;
+
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class adminSeres {
     ArrayList<Seres> seres = new ArrayList();
@@ -11,9 +14,7 @@ public class adminSeres {
 
     public adminSeres() {
     }
-    
-    
-    
+        
     public adminSeres(String path) {
         archivoS = new File(path);
     }
@@ -33,6 +34,48 @@ public class adminSeres {
     public void setArchivoS(File archivoS) {
         this.archivoS = archivoS;
     }
+     public void cargarArchivoS() {
+        try {            
+            seres = new ArrayList();
+            Seres temp;
+            if (archivoS.exists()) {
+                FileInputStream entrada
+                    = new FileInputStream(archivoS);
+                ObjectInputStream objeto
+                    = new ObjectInputStream(entrada);
+                try {
+                    while ((temp = (Seres) objeto.readObject()) != null) {
+                        seres.add(temp);
+                    }
+                } catch (EOFException e) {
+                    //encontro el final del archivo
+                }
+                objeto.close();
+                entrada.close();
+            }            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
+    public void escribirArchivoU() {
+        FileOutputStream fw = null;
+        ObjectOutputStream bw = null;
+        try {
+            fw = new FileOutputStream(archivo);
+            bw = new ObjectOutputStream(fw);
+            for (Universos i : universos) {
+                bw.writeObject(i);
+            }
+            bw.flush();
+        } catch (Exception ex) {
+        } finally {
+            try {
+                bw.close();
+                fw.close();
+            } catch (Exception ex) {
+            }
+        }
+    }
     
 }
